@@ -21,9 +21,11 @@ namespace ObserverCS_S3
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PointPublisher pointPublisher;
+        private readonly PointPublisher pointPublisher;
         private PointDrawerSubscriber pointDrawer;
         private PointWriterSubscriber pointWriter;
+        private IDisposable subscriptionDrawer;
+        private IDisposable subscriptionWriter;
 
         public MainWindow(PointPublisher pointPublisher)
         {
@@ -33,32 +35,51 @@ namespace ObserverCS_S3
             pointDrawer = new PointDrawerSubscriber();
             pointWriter = new PointWriterSubscriber(pointDrawer.Visual);
 
-            pointPublisher.Subscribe(pointDrawer);
-            pointPublisher.Subscribe(pointWriter);
+            Button subBtn = new Button();
+            subBtn.Height = 20;
+            subBtn.Width = 180;
+            subBtn.Margin = new Thickness(0, 40, 0, 0);
+            subBtn.Content = "Toggle subscribe/unsubscribe";
 
             canvas.Children.Add(pointDrawer);
+            canvas.Children.Add(subBtn);
+
+            subBtn.Click += (obj, eventArgs) =>
+            {
+                if (subscriptionDrawer == null)
+                    subscriptionDrawer = pointPublisher.Subscribe(pointDrawer);
+                else
+                    subscriptionDrawer = null;
+
+                if (subscriptionWriter == null)
+                    subscriptionWriter = pointPublisher.Subscribe(pointWriter);
+                else
+                    subscriptionWriter = null;
+
+                this.Title = subscriptionDrawer == null ? "MainWindow" : "MainWindow (Subscribed)";
+            };
 
             this.MouseDown += (obj, eventArgs) =>
             {
-                if (eventArgs.LeftButton == MouseButtonState.Pressed)
+                if (eventArgs.LeftButton == MouseButtonState.Pressed && subscriptionDrawer != null)
                     pointPublisher.point = eventArgs.GetPosition(pointDrawer);
+                if (eventArgs.RightButton == MouseButtonState.Pressed)
+                {
+                    // lets create a new clone window
+                    MainWindow mainWindow = new MainWindow(pointPublisher);
+
+                    mainWindow.Show();
+                }
 
             };
 
             this.MouseMove += (obj, eventArgs) =>
             {
-                if(eventArgs.LeftButton == MouseButtonState.Pressed)
+                if(eventArgs.LeftButton == MouseButtonState.Pressed && subscriptionDrawer != null)
                     pointPublisher.point = eventArgs.GetPosition(pointDrawer);
 
             };
 
-            this.MouseRightButtonDown += (obj, eventArgs) =>
-            {
-                // lets create a new window
-                MainWindow mainWindow = new MainWindow(pointPublisher);
-
-                mainWindow.Show();
-            };
         }
     }
 }
