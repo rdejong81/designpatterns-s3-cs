@@ -24,24 +24,19 @@ namespace ObserverCS_S3
         private PointPublisher pointMonitor;
         private PointDrawerSubscriber pointDrawer;
         private PointWriterSubscriber pointWriter;
-        private DrawingVisual drawing;
 
         public MainWindow()
         {
             InitializeComponent();
-            drawing = new DrawingVisual();
-
 
             pointMonitor = new PointPublisher(new Point(1, 1));
-            pointDrawer = new PointDrawerSubscriber(drawing);
-            pointWriter = new PointWriterSubscriber(drawing);
+            pointDrawer = new PointDrawerSubscriber();
+            pointWriter = new PointWriterSubscriber(pointDrawer.Visual);
             
             pointMonitor.Subscribe(pointDrawer);
             pointMonitor.Subscribe(pointWriter);
-            //
 
             canvas.Children.Add(pointDrawer);
-            
 
             this.MouseDown += (obj, eventArgs) =>
             {

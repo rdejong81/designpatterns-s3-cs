@@ -10,11 +10,13 @@ namespace ObserverCS_S3.Classes
 {
     class PointDrawerSubscriber : UIElement, IObserver<Point>
     {  
-        private DrawingVisual drawing;
+        private readonly DrawingVisual drawing;
 
-        public PointDrawerSubscriber(DrawingVisual drawing)
+        public DrawingVisual Visual { get { return drawing; } }
+
+        public PointDrawerSubscriber()
         {
-            this.drawing = drawing;
+            drawing = new DrawingVisual();
             this.AddVisualChild(drawing);
         }
 
