@@ -40,7 +40,8 @@ namespace ObserverCS_S3
 
             this.MouseDown += (obj, eventArgs) =>
             {
-                pointPublisher.point = eventArgs.GetPosition(pointDrawer);
+                if (eventArgs.LeftButton == MouseButtonState.Pressed)
+                    pointPublisher.point = eventArgs.GetPosition(pointDrawer);
 
             };
 
