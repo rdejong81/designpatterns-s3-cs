@@ -12,10 +12,9 @@ namespace ObserverCS_S3.Classes
     {  
         private DrawingVisual drawing;
 
-        public PointDrawerSubscriber()
+        public PointDrawerSubscriber(DrawingVisual drawing)
         {
-            
-            drawing = new DrawingVisual();
+            this.drawing = drawing;
             this.AddVisualChild(drawing);
         }
 

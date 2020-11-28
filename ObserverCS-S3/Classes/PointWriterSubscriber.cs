@@ -11,11 +11,9 @@ namespace ObserverCS_S3.Classes
     {
         private DrawingVisual drawing;
 
-        public PointWriterSubscriber()
+        public PointWriterSubscriber(DrawingVisual drawing)
         {
-
-            drawing = new DrawingVisual();
-            this.AddVisualChild(drawing);
+            this.drawing = drawing;
         }
 
         public void OnCompleted()
@@ -32,6 +30,7 @@ namespace ObserverCS_S3.Classes
         {
             DrawingContext drawingContext = drawing.RenderOpen();
             drawingContext.DrawDrawing(drawing.Drawing);
+            drawingContext.DrawRectangle(Brushes.White, new Pen(Brushes.White,1), new Rect(1, 1, 120, 14));
             drawingContext.DrawText(
                 new FormattedText(
                 "x="+value.X+" y="+value.Y, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 12, System.Windows.Media.Brushes.Black, 1

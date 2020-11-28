@@ -12,7 +12,8 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Canvas x:Name="canvas" Grid.Row="1" />
-        <Canvas x:Name="canvasbottom" Grid.Row="2"/>
+        <Canvas x:Name="canvasbottom" Grid.Row="2" Height="30" />
+        
     </Grid>
 
 </Window>
