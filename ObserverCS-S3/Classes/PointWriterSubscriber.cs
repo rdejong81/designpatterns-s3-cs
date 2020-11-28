@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace ObserverCS_S3.Classes
 {
-    class PointWriterSubscriber : IObserver<Point>
+    public class PointWriterSubscriber : IObserver<Point>
     {
         private DrawingVisual drawing;
 

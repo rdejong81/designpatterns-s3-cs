@@ -21,34 +21,42 @@ namespace ObserverCS_S3
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PointPublisher pointMonitor;
+        private PointPublisher pointPublisher;
         private PointDrawerSubscriber pointDrawer;
         private PointWriterSubscriber pointWriter;
 
-        public MainWindow()
+        public MainWindow(PointPublisher pointPublisher)
         {
             InitializeComponent();
 
-            pointMonitor = new PointPublisher(new Point(1, 1));
+            this.pointPublisher = pointPublisher;
             pointDrawer = new PointDrawerSubscriber();
             pointWriter = new PointWriterSubscriber(pointDrawer.Visual);
-            
-            pointMonitor.Subscribe(pointDrawer);
-            pointMonitor.Subscribe(pointWriter);
+
+            pointPublisher.Subscribe(pointDrawer);
+            pointPublisher.Subscribe(pointWriter);
 
             canvas.Children.Add(pointDrawer);
 
             this.MouseDown += (obj, eventArgs) =>
             {
-                pointMonitor.point = eventArgs.GetPosition(canvas);
+                pointPublisher.point = eventArgs.GetPosition(pointDrawer);
 
             };
 
             this.MouseMove += (obj, eventArgs) =>
             {
                 if(eventArgs.LeftButton == MouseButtonState.Pressed)
-                    pointMonitor.point = eventArgs.GetPosition(canvas);
+                    pointPublisher.point = eventArgs.GetPosition(pointDrawer);
 
+            };
+
+            this.MouseRightButtonDown += (obj, eventArgs) =>
+            {
+                // lets create a new window
+                MainWindow mainWindow = new MainWindow(pointPublisher);
+
+                mainWindow.Show();
             };
         }
     }
