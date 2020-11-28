@@ -49,12 +49,18 @@ namespace ObserverCS_S3
                 if (subscriptionDrawer == null)
                     subscriptionDrawer = pointPublisher.Subscribe(pointDrawer);
                 else
+                {
+                    subscriptionDrawer.Dispose();
                     subscriptionDrawer = null;
+                }
 
                 if (subscriptionWriter == null)
                     subscriptionWriter = pointPublisher.Subscribe(pointWriter);
                 else
+                {
+                    subscriptionWriter.Dispose();
                     subscriptionWriter = null;
+                }
 
                 this.Title = subscriptionDrawer == null ? "MainWindow" : "MainWindow (Subscribed)";
             };
