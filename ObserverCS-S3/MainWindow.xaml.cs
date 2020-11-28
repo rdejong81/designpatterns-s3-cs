@@ -21,23 +21,23 @@ namespace ObserverCS_S3
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PointMonitor pointMonitor;
-        private PointDrawer pointDrawer;
-        private PointWriter pointWriter;
+        private PointPublisher pointMonitor;
+        private PointDrawerSubscriber pointDrawer;
+        private PointWriterSubscriber pointWriter;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            pointMonitor = new PointMonitor(new Point(1, 1));
-            pointDrawer = new PointDrawer();
-            pointWriter = new PointWriter();
+            pointMonitor = new PointPublisher(new Point(1, 1));
+            pointDrawer = new PointDrawerSubscriber();
+            pointWriter = new PointWriterSubscriber();
             
             pointMonitor.Subscribe(pointDrawer);
             pointMonitor.Subscribe(pointWriter);
 
             canvas.Children.Add(pointDrawer);
-            canvasbottom.Children.Add(new PointDrawer());
+            canvasbottom.Children.Add(new PointDrawerSubscriber());
 
             this.MouseDown += (obj, eventArgs) =>
             {

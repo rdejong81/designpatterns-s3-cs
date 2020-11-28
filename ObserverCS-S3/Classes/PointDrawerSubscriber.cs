@@ -8,11 +8,11 @@ using System.Windows.Media;
 
 namespace ObserverCS_S3.Classes
 {
-    class PointDrawer : UIElement, IObserver<Point>
+    class PointDrawerSubscriber : UIElement, IObserver<Point>
     {  
         private DrawingVisual drawing;
 
-        public PointDrawer()
+        public PointDrawerSubscriber()
         {
             
             drawing = new DrawingVisual();

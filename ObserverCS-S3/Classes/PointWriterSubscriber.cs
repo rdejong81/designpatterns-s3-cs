@@ -7,11 +7,11 @@ using System.Windows.Media;
 
 namespace ObserverCS_S3.Classes
 {
-    class PointWriter : UIElement, IObserver<Point>
+    class PointWriterSubscriber : UIElement, IObserver<Point>
     {
         private DrawingVisual drawing;
 
-        public PointWriter()
+        public PointWriterSubscriber()
         {
 
             drawing = new DrawingVisual();

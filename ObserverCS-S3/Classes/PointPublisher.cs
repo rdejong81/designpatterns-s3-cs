@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace ObserverCS_S3.Classes
 {
-    class PointMonitor : IObservable<Point>
+    class PointPublisher : IObservable<Point>
     {
         private List<IObserver<Point>> observers;
         private Point _point;
@@ -24,7 +24,7 @@ namespace ObserverCS_S3.Classes
             } 
         }
 
-        public PointMonitor(Point value)
+        public PointPublisher(Point value)
         {
             observers = new List<IObserver<Point>>();
             _point = value;
